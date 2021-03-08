@@ -23,11 +23,12 @@ namespace SQLProgrammability
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            // ThemeDashboard
             bundles.Add(new StyleBundle("~/assets/css").Include(
                       "~/assets/css/toolkit-inverse.css",
                       "~/assets/css/docs.css",
                       "~/assets/css/application.css"));
-            bundles.Add(new StyleBundle("~/assets/js").Include(
+            bundles.Add(new ScriptBundle("~/assets/js").Include(
                       "~/assets/js/jquery.min.js",
                       "~/assets/js/chart.js",
                       "~/assets/js/tablesorter.min.js",

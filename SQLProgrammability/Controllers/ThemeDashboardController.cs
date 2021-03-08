@@ -11,7 +11,36 @@ namespace SQLProgrammability.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+
+            return View();
+        }
+
+        public ActionResult Overview()
+        {
+
+            return View();
+        }
+
+        public ActionResult orderhistory()
+        {
+
+            return View();
+        }
+
+        public ActionResult fluidlayout()
+        {
+
+            return View();
+        }
+
+        public ActionResult iconnav()
+        {
+
+            return View();
+        }
+
+        public ActionResult lightUI()
+        {
 
             return View();
         }

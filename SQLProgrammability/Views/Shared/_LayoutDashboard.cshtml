@@ -51,7 +51,7 @@
                     <li>
                         @Html.ActionLink("Icon nav", "iconnav", "ThemeDashboard")
                     </li>
-                    <li class="active">
+                    <li @*class="active"*@>
                         @Html.ActionLink("Light UI", "lightUI", "ThemeDashboard")
                     </li>
                 </ul>
@@ -60,7 +60,7 @@
     </nav>
     @RenderBody()
 
-    @Styles.Render("~/assets/js")
+    @Scripts.Render("~/assets/js")
     @RenderSection("scripts", required: false)
     <script>
     // execute/clear BS loaders for docs

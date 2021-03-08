@@ -189,6 +189,7 @@
     <Content Include="assets\css\docs.css" />
     <Content Include="assets\css\toolkit-inverse.css" />
     <Content Include="assets\css\toolkit-light.css" />
+    <Content Include="assets\img\avatar-mdo.png" />
     <Content Include="assets\js\application.js" />
     <Content Include="assets\js\chart.js" />
     <Content Include="assets\js\jquery.min.js" />
@@ -222,6 +223,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="assets\fonts\toolkit-entypo.eot" />
+    <Content Include="assets\fonts\toolkit-entypo.ttf" />
+    <Content Include="assets\fonts\toolkit-entypo.woff" />
+    <Content Include="assets\fonts\toolkit-entypo.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -245,7 +250,14 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\ThemeDashboard\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutThemeDashboard.cshtml" />
+    <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
+    <Content Include="Views\ThemeDashboard\Overview.cshtml" />
+    <Content Include="Views\ThemeDashboard\orderhistory.cshtml" />
+    <Content Include="Views\ThemeDashboard\fluidlayout.cshtml" />
+    <Content Include="Views\ThemeDashboard\iconnav.cshtml" />
+    <Content Include="Views\ThemeDashboard\lightUI.cshtml" />
+    <Content Include="Views\ThemeDashboard\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_LayoutDashboardIconNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

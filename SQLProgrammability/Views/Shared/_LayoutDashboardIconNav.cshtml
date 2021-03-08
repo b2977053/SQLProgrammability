@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>
+        @ViewBag.Title &middot;
+    </title>
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+    @Styles.Render("~/assets/css")
+    <style>
+        /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+        /* this chunk of css is not part of the toolkit :) */
+        body {
+            width: 1px;
+            min-width: 100%;
+            *width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="with-iconav">
+        <nav class="iconav">
+            <a class="iconav-brand" href="~/ThemeDashboard/index">
+                <span class="icon icon-leaf iconav-brand-icon"></span>
+            </a>
+            <div class="iconav-slider">
+                <ul class="nav nav-pills iconav-nav">
+                    <li>
+                        <a href="~/ThemeDashboard/Overview" title="Overview" data-toggle="tooltip" data-placement="right" data-container="body">
+                            <span class="icon icon-home"></span>
+                            <small class="iconav-nav-label visible-xs-block">Overview</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/ThemeDashboard/orderhistory" title="Order history" data-toggle="tooltip" data-placement="right" data-container="body">
+                            <span class="icon icon-text-document"></span>
+                            <small class="iconav-nav-label visible-xs-block">History</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/ThemeDashboard/fluidlayout" title="Fluid layout" data-toggle="tooltip" data-placement="right" data-container="body">
+                            <span class="icon icon-globe"></span>
+                            <small class="iconav-nav-label visible-xs-block">Fluid layout</small>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="~/ThemeDashboard/iconnav" title="Icon-nav layout" data-toggle="tooltip" data-placement="right" data-container="body">
+                            <span class="icon icon-area-graph"></span>
+                            <small class="iconav-nav-label visible-xs-block">Icon nav</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/ThemeDashboard/lightUI" title="Light UI" data-toggle="tooltip" data-placement="right" data-container="body">
+                            <span class="icon icon-flash"></span>
+                            <small class="iconav-nav-label visible-xs-block">Light UI</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Signed in as mdo" data-toggle="tooltip" data-placement="right" data-container="body">
+                            <img src="../assets/img/avatar-mdo.png" alt="" class="img-circle img-responsive">
+                            <small class="iconav-nav-label visible-xs-block">@@mdo</small>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/assets/js")
+    @RenderSection("scripts", required: false)
+    <script>
+        // execute/clear BS loaders for docs
+        $(function () {
+            while (window.BS && window.BS.loader && window.BS.loader.length) {
+                (window.BS.loader.pop())()
+            }
+        })
+    </script>
+</body>
+</html>
