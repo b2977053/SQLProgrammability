@@ -40,25 +40,19 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        @Html.ActionLink("Overview", "Overview", "ThemeDashboard", new { area = "" }, new { @id = "navbar-main", @class = "navbar-brand" })
-                        <a href="../index.html">Overview</a>
+                        @Html.ActionLink("Overview", "Overview", "ThemeDashboard")
                     </li>
                     <li>
-                        <a href="../order-history/index.html">Order History</a>
+                        @Html.ActionLink("order-history", "orderhistory", "ThemeDashboard")
                     </li>
                     <li>
-                        <a href="../fluid/index.html">Fluid layout</a>
+                        @Html.ActionLink("Fluid layout", "fluidlayout", "ThemeDashboard")
                     </li>
                     <li>
-                        <a href="../icon-nav/index.html">Icon nav</a>
+                        @Html.ActionLink("Icon nav", "iconnav", "ThemeDashboard")
                     </li>
                     <li class="active">
-                        <a href="../docs/index.html">
-                            Docs
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../light/index.html">Light UI</a>
+                        @Html.ActionLink("Light UI", "lightUI", "ThemeDashboard")
                     </li>
                 </ul>
             </div>

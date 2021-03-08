@@ -163,6 +163,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ThemeDashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -184,6 +185,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="assets\css\application.css" />
+    <Content Include="assets\css\docs.css" />
+    <Content Include="assets\css\toolkit-inverse.css" />
+    <Content Include="assets\css\toolkit-light.css" />
+    <Content Include="assets\js\application.js" />
+    <Content Include="assets\js\chart.js" />
+    <Content Include="assets\js\jquery.min.js" />
+    <Content Include="assets\js\tablesorter.min.js" />
+    <Content Include="assets\js\toolkit.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -234,6 +244,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\ThemeDashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutThemeDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,6 +22,17 @@ namespace SQLProgrammability
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/assets/css").Include(
+                      "~/assets/css/toolkit-inverse.css",
+                      "~/assets/css/docs.css",
+                      "~/assets/css/application.css"));
+            bundles.Add(new StyleBundle("~/assets/js").Include(
+                      "~/assets/js/jquery.min.js",
+                      "~/assets/js/chart.js",
+                      "~/assets/js/tablesorter.min.js",
+                      "~/assets/js/toolkit.js",
+                      "~/assets/js/application.js"));
         }
     }
 }
