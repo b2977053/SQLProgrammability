@@ -1405,6 +1405,10 @@ a.bg-danger:focus {
   margin: 36px 0 18px;
   border-bottom: 1px solid #dddddd;
 }
+.search-header {
+    margin: 5px 0 5px;
+    border-bottom: 1px solid #dddddd;
+}
 ul,
 ol {
   margin-top: 0;
