@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLProgrammability.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,9 @@ namespace SQLProgrammability.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
+
+            //SQLPro db = new SQLPro();
+            //db.ProFunction.Count();
 
             return View();
         }
