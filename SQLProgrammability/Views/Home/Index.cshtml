@@ -7,14 +7,17 @@
         {
             @Html.Hidden("testHidden", "testHiddentestHidden")
 
-
-            @:SP_NAME: @Html.TextBox("SP_NAME", "SP_NAMESP_NAME")
-            @:EXECUTE: @Html.TextBox("EXECUTE", "EXECUTEEXECUTE")
-            @:<br>content: @Html.TextBox("content", "contentcontent")
-            @:remark: @Html.TextBox("remark", "remarkremark")
-            @:<br>tags: @Html.TextBox("tags", "tagstags")
+            <div class="form-group">
+                Name: @Html.TextBox("Name", "NameName")
+                EXECUTE: @Html.TextBox("EXECUTE", "EXECUTEEXECUTE")
+                <br>content: @Html.TextBox("content", "contentcontent")
+                remark: @Html.TextBox("remark", "remarkremark")
+                <br>tags: @Html.TextBox("tags", "tagstags")
+            </div>
         }
-
+        <button type="button" id="btnADD" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalADD">
+            新增
+        </button>
     </div>
     <div class="col-md-12">
         <table class="table">
@@ -29,7 +32,7 @@
             <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td>Mark</td>
+                    <td data-toggle="modal" data-target="#ModalEdit">Mark</td>
                     <td>Otto</td>
                     <td>mdo</td>
                 </tr>
@@ -49,3 +52,94 @@
         </table>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalADD" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">新增</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("index", "Home", FormMethod.Post, new { @Id = "formAdd", @Autocomplete= "off" }))
+                {
+                    <div class="">
+                        Name: @Html.TextBox("Name", "", new { @class = "form-control" })
+                        EXECUTE: @Html.TextArea("EXECUTE", "", new { @class = "form-control", @rows = "3" })
+                        <br>content: @Html.TextArea("content", "", new { @class = "form-control", @rows = "9" })
+                        remark: @Html.TextArea("remark", "", new { @class = "form-control", @rows = "3" })
+                        <br>tags: @Html.TextBox("tags", "", new { @class = "form-control" })
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="FormAdd('formAdd');" >Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function FormAdd(formID) {
+        var formData = new FormData(document.getElementById(formID));
+        var data = {};
+        formData.forEach((value, key) => data[key] = value);
+        var settings = {
+            "url": "../api/SQLProCRUD",
+            "method": "POST",
+            "contentType": false,
+            "timeout": 100,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": data
+        };
+        $.ajax(settings)
+            .done(function (e) {
+                if (e) {
+                    if (e.msg === 'COMMIT...') {
+                        var Old_innerText = document.getElementById('btnADD').innerText;
+                        document.getElementById('btnADD').innerText = 'COMMIT';
+                        setTimeout(function () { document.getElementById('btnADD').innerText = Old_innerText; }, 2000);
+
+                        $('#ModalADD').modal('hide');
+                    } else {
+                        alert(e.msg);
+                    }
+                }
+            })
+            .fail(function (e) {
+                console.log(e);
+                alert("error");
+            })
+            .always(function () {
+                
+            });
+    }
+</script>
+<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="ModalEditTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">修改</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm("index", "Home", new { @Id = "formAdd", enctype = "multipart/form-data" })) { }

@@ -5,70 +5,200 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
+using System.Data.Entity;
 
 namespace SQLProgrammability.Controllers
 {
     public class SQLProCRUDController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public IEnumerable<ProStoredProcedure> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            Exception exception = null;
+            List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
+            using (SQLPro db = new SQLPro())
+            {
+                try
+                {
+                    proSPs = db.ProStoredProcedure.ToList();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+            }
+
+            return proSPs;
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public object Get(int id)
         {
-            return "value";
+            Exception exception = null;
+            ProStoredProcedure proSP = null;
+            using (SQLPro db = new SQLPro())
+            {
+                try
+                {
+                    proSP = db.ProStoredProcedure.Find(id);
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+            }
+
+            if (exception == null && proSP != null)
+            {
+                return proSP;
+            }
+            else
+            {
+                return exception;
+            }
         }
 
         // POST api/values
-        public void Post([FromBody]ProStoredProcedure proSP)
+        public object Post([FromBody]ProStoredProcedure proSP)
         {
+            if (proSP == null)
+            {
+                return new { msg= "proSP is null !!" };
+            }
+            else if (proSP.Name == null)
+            {
+                return new { msg = "proSP.Name is null !!" };
+            }
+            else if (proSP.Execute == null)
+            {
+                return new { msg = "proSP.Execute is null !!" };
+            }
+
+            proSP.Name = proSP.Name.Trim();
+            proSP.Execute = proSP.Execute.Trim();
+
+
+            Exception exception = null;
             DateTime dNow = DateTime.Now;
             proSP.CreatedTime = dNow;
             proSP.UpdateTime = dNow;
             using (SQLPro db = new SQLPro())
             {
-                db.ProStoredProcedure.Add(proSP);
-                db.SaveChanges();
+                try
+                {
+                    db.ProStoredProcedure.Add(proSP);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+            }
+
+            if (exception == null)
+            {
+                return new { msg = "COMMIT" };
+            }
+            else
+            {
+                return exception;
             }
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]ProStoredProcedure proSPNew)
+        public object Put(int id, [FromBody]ProStoredProcedure proSPNew)
         {
+            proSPNew.Name = proSPNew.Name.Trim();
+            proSPNew.Execute = proSPNew.Execute.Trim();
 
+            Exception exception = null;
 
             DateTime dNow = DateTime.Now;
 
             using (SQLPro db = new SQLPro())
             {
-                ProStoredProcedure proSP = db.ProStoredProcedure.Find(id);
+                try
+                {
+                    ProStoredProcedure proSP = db.ProStoredProcedure.Find(id);
 
-                if (proSP.Name != proSPNew.Name)
-                {
-                    proSP.Name = proSPNew.Name;
+                    if (proSP != null)
+                    {
+                        if (!string.IsNullOrEmpty(proSPNew.Name))
+                        {
+                            proSP.Name = proSPNew.Name;
+                        }
+                        if (!string.IsNullOrEmpty(proSPNew.Execute))
+                        {
+                            proSP.Execute = proSPNew.Execute;
+                        }
+                        if (!string.IsNullOrEmpty(proSPNew.Content))
+                        {
+                            proSP.Content = proSPNew.Content;
+                        }
+                        if (!string.IsNullOrEmpty(proSPNew.Remark))
+                        {
+                            proSP.Remark = proSPNew.Remark;
+                        }
+                        db.SaveChanges();
+                    }
                 }
-                if (proSP.Execute != proSPNew.Execute)
+                catch (Exception ex)
                 {
-                    proSP.Execute = proSPNew.Execute;
+                    exception = ex;
                 }
-                if (proSP.Content != proSPNew.Content)
-                {
-                    proSP.Content = proSPNew.Content;
-                }
-                if (proSP.Remark != proSPNew.Remark)
-                {
-                    proSP.Remark = proSPNew.Remark;
-                }
-                db.SaveChanges();
+            }
+
+            if (exception == null)
+            {
+                return new { msg = "COMMIT" };
+            }
+            else
+            {
+                return exception;
             }
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public object Delete(int id)
         {
+            Exception exception = null;
+
+            int[] ids = new int[] { id };
+            if (ids == null)
+            {
+                return exception;
+            }
+
+            using (SQLPro db = new SQLPro())
+            {
+                try
+                {
+                    List<ProStoredProcedure> proSPs = db.ProStoredProcedure.Where(r=> ids.Any(_id=>_id.Equals(r.Id))).ToList();
+
+                    foreach (var proSP in proSPs)
+                    {
+                        db.Entry(proSP).State = EntityState.Deleted;
+                        //db.ProStoredProcedure.Remove(proSP); // 刪除的另一個方法 (上下擇一)
+                    }
+
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+            }
+
+            if (exception == null)
+            {
+                return new { msg = "COMMIT" };
+            }
+            else
+            {
+                return exception;
+            }
         }
     }
 }
