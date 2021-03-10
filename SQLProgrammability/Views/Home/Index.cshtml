@@ -20,36 +20,7 @@
         </button>
     </div>
     <div class="col-md-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td data-toggle="modal" data-target="#ModalEdit">Mark</td>
-                    <td>Otto</td>
-                    <td>mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>twitter</td>
-                </tr>
-            </tbody>
-        </table>
+        <table id="example" class="display" width="100%"></table>
     </div>
 </div>
 
@@ -100,9 +71,9 @@
         $.ajax(settings)
             .done(function (e) {
                 if (e) {
-                    if (e.msg === 'COMMIT...') {
+                    if (e.msg === 'COMMIT') {
                         var Old_innerText = document.getElementById('btnADD').innerText;
-                        document.getElementById('btnADD').innerText = 'COMMIT';
+                        document.getElementById('btnADD').innerText = 'COMMIT...';
                         setTimeout(function () { document.getElementById('btnADD').innerText = Old_innerText; }, 2000);
 
                         $('#ModalADD').modal('hide');
@@ -140,6 +111,43 @@
     </div>
 </div>
 
+<script>
 
+    var table_example = {};
+    function SetDataTable_ajax(JQElement, url) {
+        var Ajax = { type: 'GET', dataSrc: '' };
+        Ajax.url = url;
+        var dataTable = JQElement.DataTable({
+            paging: false, scrollY: '350px',
+            dom: '<t>', // 查詢隱藏
+            scroller: {
+                loadingIndicator: true // 是否顯示"檔案加載中"文字。
+            },
+            language: {
+                loadingRecords: '請稍等...',
+                emptyTable: '無資料'
+            },
+            footerCallback: function FooterCallback() { },
+            drawCallback: function DrawCallback() { },
+            ajax: Ajax,
+            columns: [
+                { data: "Name", title: "Name", width: "", className: '' },
+                { data: "Execute", title: "Execute", width: "", className: '' },
+                { data: "Remark", title: "Remark", width: "", className: '' },
+                { data: "Tags", title: "Tags", width: "", className: '' }
+            ]
 
-@using (Html.BeginForm("index", "Home", new { @Id = "formAdd", enctype = "multipart/form-data" })) { }
+        });
+        return dataTable;
+    }
+    $(document).ready(function () {
+        table_example = SetDataTable_ajax($('#example'), 'http://localhost:58077/api/SQLProCRUD');
+    });
+
+    /*
+        table_example.ajax.json: ƒ ()  // 取得 Response 的 JSON 資料
+        table_example.ajax.params: ƒ ()  // 取得 params
+        table_example.ajax.reload: ƒ ()  // 重新載入資料，並回傳自己(table_example)
+        table_example.ajax.url: ƒ ()  // 取得 url
+    */
+</script>
