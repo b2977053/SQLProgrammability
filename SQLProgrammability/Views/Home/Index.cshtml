@@ -103,7 +103,17 @@
                 <h4 class="modal-title">修改</h4>
             </div>
             <div class="modal-body">
-                ...
+                @using (Html.BeginForm("index", "Home", FormMethod.Post, new { @Id = "formEdit", @Autocomplete = "off" }))
+                {
+                    @Html.Hidden("Id", "")
+                    <div class="">
+                        Name: @Html.TextBox("Name", "", new { @class = "form-control" })
+                        EXECUTE: @Html.TextArea("EXECUTE", "", new { @class = "form-control", @rows = "3" })
+                        <br>content: @Html.TextArea("content", "", new { @class = "form-control", @rows = "9" })
+                        remark: @Html.TextArea("remark", "", new { @class = "form-control", @rows = "3" })
+                        <br>tags: @Html.TextBox("tags", "", new { @class = "form-control" })
+                    </div>
+                }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,6 +122,21 @@
         </div>
     </div>
 </div>
+<script>
+    function SetModalEditData(id) {
+        var data = Array.prototype.filter.call(table_example.ajax.json(), (data) => data.Id === id);
+        if (data && data[0]) {
+            formEdit.Id.value = data[0].Id;
+            formEdit.Name.value = data[0].Name;
+            formEdit.EXECUTE.value = data[0].Execute;
+            formEdit.content.value = data[0].Content;
+            formEdit.remark.value = data[0].Remark;
+            formEdit.tags.value = data[0].Tags;
+
+            $('#ModalEdit').modal('show');
+        }
+    }
+</script>
 
 <script>
 
@@ -140,9 +165,15 @@
                         }
 
                     }, '--');
-                console.log(total);
+                //console.log(total);
 
-                api.column('col_id:name').data().each((value, index, ColInstance) => { })
+                var el_col_ids = Array.prototype.map.call(api.column('col_view:name').nodes(), td => td);
+
+                api.column('col_id:name').data().each((id, index, ColInstance) => {
+                    el_col_ids[index].addEventListener("click", () => {
+                        SetModalEditData(id);
+                    }, false);
+                });
             },
             drawCallback: function DrawCallback() { },
             ajax: Ajax,
@@ -150,11 +181,15 @@
                 { targets: '_all', width: "", className: ''}
             ],
             columns: [
-                { data: "Id", title: "Id", visible: false, name: 'col_id' },
-                { data: "Name", title: "Name" },
-                { data: "Execute", title: "Execute" },
-                { data: "Remark", title: "Remark" },
-                { data: "Tags", title: "Tags", name: 'col_tag' }
+                {
+                    data: null, title: '', name: 'col_view'
+                    , defaultContent: '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>'
+                },
+                { data: 'Id', title: 'Id', visible: false, name: 'col_id' },
+                { data: 'Name', title: 'Name' },
+                { data: 'Execute', title: 'Execute' },
+                { data: 'Remark', title: 'Remark' },
+                { data: 'Tags', title: 'Tags', name: 'col_tag' }
             ]
 
         });
