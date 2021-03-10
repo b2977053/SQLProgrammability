@@ -22,7 +22,7 @@ namespace SQLProgrammability.Controllers
             {
                 try
                 {
-                    proSPs = db.ProStoredProcedure.ToList();
+                    proSPs = db.ProStoredProcedure.OrderByDescending(r=>r.CreatedTime).ToList();
                 }
                 catch (Exception ex)
                 {

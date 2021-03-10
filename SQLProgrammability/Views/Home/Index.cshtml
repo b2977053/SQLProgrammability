@@ -81,6 +81,8 @@
                         alert(e.msg);
                     }
                 }
+
+                table_example.ajax.reload();
             })
             .fail(function (e) {
                 console.log(e);
@@ -127,14 +129,32 @@
                 loadingRecords: '請稍等...',
                 emptyTable: '無資料'
             },
-            footerCallback: function FooterCallback() { },
+            footerCallback: function FooterCallback() {
+                var api = this.api();
+                total = api.column('col_tag:name').data()
+                    .reduce(function (a, b) {
+                        if (b != null) {
+                            return a + '|' + b;
+                        } else {
+                            return a;
+                        }
+
+                    }, '--');
+                console.log(total);
+
+                api.column('col_id:name').data().each((value, index, ColInstance) => { })
+            },
             drawCallback: function DrawCallback() { },
             ajax: Ajax,
+            columnDefs: [
+                { targets: '_all', width: "", className: ''}
+            ],
             columns: [
-                { data: "Name", title: "Name", width: "", className: '' },
-                { data: "Execute", title: "Execute", width: "", className: '' },
-                { data: "Remark", title: "Remark", width: "", className: '' },
-                { data: "Tags", title: "Tags", width: "", className: '' }
+                { data: "Id", title: "Id", visible: false, name: 'col_id' },
+                { data: "Name", title: "Name" },
+                { data: "Execute", title: "Execute" },
+                { data: "Remark", title: "Remark" },
+                { data: "Tags", title: "Tags", name: 'col_tag' }
             ]
 
         });
