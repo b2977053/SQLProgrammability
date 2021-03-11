@@ -160,22 +160,17 @@ namespace SQLProgrammability.Controllers
             }
         }
 
-        // DELETE api/values/5
-        public object Delete(int id)
+        // DELETE api/SQLProCRUD
+        public object Delete([FromBody]List<int> ids)
         {
             Exception exception = null;
 
-            int[] ids = new int[] { id };
-            if (ids == null)
-            {
-                return exception;
-            }
-
+            List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
             using (SQLPro db = new SQLPro())
             {
                 try
                 {
-                    List<ProStoredProcedure> proSPs = db.ProStoredProcedure.Where(r=> ids.Any(_id=>_id.Equals(r.Id))).ToList();
+                    proSPs = db.ProStoredProcedure.Where(r => ids.Any(_id => _id.Equals(r.Id))).ToList();
 
                     foreach (var proSP in proSPs)
                     {
@@ -183,21 +178,31 @@ namespace SQLProgrammability.Controllers
                         //db.ProStoredProcedure.Remove(proSP); // 刪除的另一個方法 (上下擇一)
                     }
 
-                    db.SaveChanges();
+                    if (proSPs.Count > 0)
+                    {
+                        db.SaveChanges();
+                    }
                 }
                 catch (Exception ex)
                 {
                     exception = ex;
                 }
-            }
 
-            if (exception == null)
-            {
-                return new { msg = "COMMIT" };
-            }
-            else
-            {
-                return exception;
+                if (exception == null)
+                {
+                    if (proSPs.Count > 0)
+                    {
+                        return new { msg = "COMMIT" };
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else
+                {
+                    return exception;
+                }
             }
         }
     }
