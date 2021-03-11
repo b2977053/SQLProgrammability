@@ -108,7 +108,7 @@ namespace SQLProgrammability.Controllers
         }
 
         // PUT api/values/5
-        public object Put(int id, [FromBody]ProStoredProcedure proSPNew)
+        public object Put([FromBody]ProStoredProcedure proSPNew)
         {
             proSPNew.Name = proSPNew.Name.Trim();
             proSPNew.Execute = proSPNew.Execute.Trim();
@@ -121,7 +121,7 @@ namespace SQLProgrammability.Controllers
             {
                 try
                 {
-                    ProStoredProcedure proSP = db.ProStoredProcedure.Find(id);
+                    ProStoredProcedure proSP = db.ProStoredProcedure.Find(proSPNew.Id);
 
                     if (proSP != null)
                     {

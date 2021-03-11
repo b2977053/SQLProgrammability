@@ -62,7 +62,7 @@
             "url": "../api/SQLProCRUD",
             "method": "POST",
             "contentType": false,
-            "timeout": 100,
+            "timeout": 3000,
             "headers": {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
@@ -117,7 +117,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Save changes</button>
+                <button type="button" class="btn btn-success" onclick="FormEdit('formEdit');">Save changes</button>
             </div>
         </div>
     </div>
@@ -135,6 +135,42 @@
 
             $('#ModalEdit').modal('show');
         }
+    }
+    function FormEdit(formID) {
+        var formData = new FormData(document.getElementById(formID));
+        var data = {};
+        formData.forEach((value, key) => data[key] = value);
+        var settings = {
+            "url": "../api/SQLProCRUD",
+            "method": "PUT",
+            "contentType": false,
+            "timeout": 3000,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": data
+        };
+        $.ajax(settings)
+            .done(function (e) {
+                if (e) {
+                    if (e.msg === 'COMMIT') {
+
+
+                        $('#ModalEdit').modal('hide');
+                    } else {
+                        alert(e.msg);
+                    }
+                }
+
+                table_example.ajax.reload();
+            })
+            .fail(function (e) {
+                console.log(e);
+                alert("error");
+            })
+            .always(function () {
+
+            });
     }
 </script>
 
