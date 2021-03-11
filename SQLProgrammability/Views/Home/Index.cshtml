@@ -100,7 +100,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title">修改</h4>
+                <h4 class="modal-title">
+                    <button type="button" class="btn btn-default btn-xs" onclick="FormDelete('formEdit');">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    修改
+                </h4>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm("index", "Home", FormMethod.Post, new { @Id = "formEdit", @Autocomplete = "off" }))
@@ -172,6 +177,41 @@
 
             });
     }
+    function FormDelete(formID) {
+        var data = [];
+        data.push(document.getElementById(formID).Id.value);
+        var settings = {
+            "url": "../api/SQLProCRUD",
+            "method": "DELETE",
+            "contentType": false,
+            "timeout": 3000,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify(data)
+        };
+        $.ajax(settings)
+            .done(function (e) {
+                if (e) {
+                    if (e.msg === 'COMMIT') {
+
+
+                        $('#ModalEdit').modal('hide');
+                    } else {
+                        alert(e.msg);
+                    }
+                }
+
+                table_example.ajax.reload();
+            })
+            .fail(function (e) {
+                console.log(e);
+                alert("error");
+            })
+            .always(function () {
+
+            });
+    }
 </script>
 
 <script>
@@ -219,7 +259,7 @@
             columns: [
                 {
                     data: null, title: '', name: 'col_view'
-                    , defaultContent: '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>'
+                    , defaultContent: '<button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>'
                 },
                 { data: 'Id', title: 'Id', visible: false, name: 'col_id' },
                 { data: 'Name', title: 'Name' },
