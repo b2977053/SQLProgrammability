@@ -54,6 +54,13 @@
     </div>
 </div>
 <script>
+    function SetModalAddDataClear() {
+        formAdd.Name.value = '';
+        formAdd.EXECUTE.value = '';
+        formAdd.content.value = '';
+        formAdd.remark.value = '';
+        formAdd.tags.value = '';
+    }
     function FormAdd(formID) {
         var formData = new FormData(document.getElementById(formID));
         var data = {};
@@ -77,6 +84,7 @@
                         setTimeout(function () { document.getElementById('btnADD').innerText = Old_innerText; }, 2000);
 
                         $('#ModalADD').modal('hide');
+                        SetModalAddDataClear();
                     } else {
                         alert(e.msg);
                     }
