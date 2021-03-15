@@ -11,8 +11,8 @@
                 EXECUTE: @Html.TextBox("EXECUTE", (string)ViewBag.EXECUTE)
                 content: @Html.TextBox("content", (string)ViewBag.content)
                 remark: @Html.TextBox("remark", (string)ViewBag.remark)
-                <br>tags: @Html.TextBox("tags", (string)ViewBag.tags)
-				<button>查詢</button>
+                tags: @Html.TextBox("tags", (string)ViewBag.tags)
+				<br><button>查詢</button>
             </div>
         }
         <button type="button" id="btnADD" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalADD">
@@ -185,41 +185,47 @@
 
             });
     }
-    function FormDelete(formID) {
-        var data = [];
-        data.push(document.getElementById(formID).Id.value);
-        var settings = {
-            "url": "../api/SQLProCRUD",
-            "method": "DELETE",
-            "contentType": false,
-            "timeout": 3000,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "data": JSON.stringify(data)
-        };
-        $.ajax(settings)
-            .done(function (e) {
-                if (e) {
-                    if (e.msg === 'COMMIT') {
+	function FormDelete(formID) {
+		if (confirm('是否確定要刪除檔案?')) {
+			SQLProCRUD_DELETE(document.getElementById(formID).Id.value);
+		}
+	}
+	function SQLProCRUD_DELETE(Id)
+	{
+		var data = [];
+		data.push(Id);
+		var settings = {
+			"url": "../api/SQLProCRUD",
+			"method": "DELETE",
+			"contentType": false,
+			"timeout": 3000,
+			"headers": {
+				"Content-Type": "application/json"
+			},
+			"data": JSON.stringify(data)
+		};
+		$.ajax(settings)
+			.done(function (e) {
+				if (e) {
+					if (e.msg === 'COMMIT') {
 
 
-                        $('#ModalEdit').modal('hide');
-                    } else {
-                        alert(e.msg);
-                    }
-                }
+						$('#ModalEdit').modal('hide');
+					} else {
+						alert(e.msg);
+					}
+				}
 
-                table_example.ajax.reload();
-            })
-            .fail(function (e) {
-                console.log(e);
-                alert("error");
-            })
-            .always(function () {
+				table_example.ajax.reload();
+			})
+			.fail(function (e) {
+				console.log(e);
+				alert("error");
+			})
+			.always(function () {
 
-            });
-    }
+			});
+	}
 </script>
 
 <script>
