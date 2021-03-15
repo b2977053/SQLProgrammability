@@ -31,37 +31,289 @@ namespace SQLProgrammability.Controllers
             }
 
             return proSPs;
-        }
+		}
+		public IEnumerable<ProStoredProcedure> Get(string Name)
+		{
+			if (Name != null)
+			{
+				Name = Name.Trim();
+			}
+			else
+			{
+				Name = "";
+			}
+			Exception exception = null;
+			List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
+			using (SQLPro db = new SQLPro())
+			{
+				db.Database.Log = (SqlLOG) =>
+				{
+					System.Diagnostics.Debug.WriteLine(SqlLOG);
+				};
 
-        // GET api/values/5
-        public object Get(int id)
-        {
-            Exception exception = null;
-            ProStoredProcedure proSP = null;
-            using (SQLPro db = new SQLPro())
-            {
-                try
-                {
-                    proSP = db.ProStoredProcedure.Find(id);
-                }
-                catch (Exception ex)
-                {
-                    exception = ex;
-                }
-            }
+				try
+				{
+					proSPs = (from proSP in db.ProStoredProcedure
+							  where proSP.Name.Contains(Name.Trim())
+							  select proSP).OrderByDescending(r=>r.CreatedTime).ToList();
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			}
 
-            if (exception == null && proSP != null)
-            {
-                return proSP;
-            }
-            else
-            {
-                return exception;
-            }
-        }
+			return proSPs;
+		}
+		public IEnumerable<ProStoredProcedure> Get(string Name, string EXECUTE)
+		{
+			if (Name != null)
+			{
+				Name = Name.Trim();
+			}
+			else
+			{
+				Name = "";
+			}
+			if (EXECUTE != null)
+			{
+				EXECUTE = EXECUTE.Trim();
+			}
+			else
+			{
+				EXECUTE = "";
+			}
+			Exception exception = null;
+			List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
+			using (SQLPro db = new SQLPro())
+			{
+				db.Database.Log = (SqlLOG) =>
+				{
+					System.Diagnostics.Debug.WriteLine(SqlLOG);
+				};
 
-        // POST api/values
-        public object Post([FromBody]ProStoredProcedure proSP)
+				try
+				{
+					proSPs = (from proSP in db.ProStoredProcedure
+							  where proSP.Name.Contains(Name) && proSP.Execute.Contains(EXECUTE)
+							  select proSP).OrderByDescending(r=>r.CreatedTime).ToList();
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			}
+
+			return proSPs;
+		}
+
+		public IEnumerable<ProStoredProcedure> Get(string Name, string EXECUTE, string content)
+		{
+			if (Name != null)
+			{
+				Name = Name.Trim();
+			}
+			else
+			{
+				Name = "";
+			}
+			if (EXECUTE != null)
+			{
+				EXECUTE = EXECUTE.Trim();
+			}
+			else
+			{
+				EXECUTE = "";
+			}
+			if (content != null)
+			{
+				content = content.Trim();
+			}
+			else
+			{
+				content = "";
+			}
+			Exception exception = null;
+			List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
+			using (SQLPro db = new SQLPro())
+			{
+				db.Database.Log = (SqlLOG) =>
+				{
+					System.Diagnostics.Debug.WriteLine(SqlLOG);
+				};
+
+				try
+				{
+					proSPs = (from proSP in db.ProStoredProcedure
+							  where proSP.Name.Contains(Name) && proSP.Execute.Contains(EXECUTE) && proSP.Content.Contains(content)
+							  select proSP).OrderByDescending(r=>r.CreatedTime).ToList();
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			}
+
+			return proSPs;
+		}
+
+		public IEnumerable<ProStoredProcedure> Get(string Name, string EXECUTE, string content, string remark)
+		{
+			if (Name != null)
+			{
+				Name = Name.Trim();
+			}
+			else
+			{
+				Name = "";
+			}
+			if (EXECUTE != null)
+			{
+				EXECUTE = EXECUTE.Trim();
+			}
+			else
+			{
+				EXECUTE = "";
+			}
+			if (content != null)
+			{
+				content = content.Trim();
+			}
+			else
+			{
+				content = "";
+			}
+			if (remark != null)
+			{
+				remark = remark.Trim();
+			}
+			else
+			{
+				remark = "";
+			}
+			Exception exception = null;
+			List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
+			using (SQLPro db = new SQLPro())
+			{
+				db.Database.Log = (SqlLOG) =>
+				{
+					System.Diagnostics.Debug.WriteLine(SqlLOG);
+				};
+
+				try
+				{
+					proSPs = (from proSP in db.ProStoredProcedure
+							  where proSP.Name.Contains(Name) && proSP.Execute.Contains(EXECUTE)
+							  && proSP.Content.Contains(content) && proSP.Remark.Contains(remark)
+							  select proSP).OrderByDescending(r=>r.CreatedTime).ToList();
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			}
+
+			return proSPs;
+		}
+
+		public IEnumerable<ProStoredProcedure> Get(string Name, string EXECUTE, string content, string remark, string tags)
+		{
+			if (Name != null)
+			{
+				Name = Name.Trim();
+			}
+			else
+			{
+				Name = "";
+			}
+			if (EXECUTE != null)
+			{
+				EXECUTE = EXECUTE.Trim();
+			}
+			else
+			{
+				EXECUTE = "";
+			}
+			if (content != null)
+			{
+				content = content.Trim();
+			}
+			else
+			{
+				content = "";
+			}
+			if (remark != null)
+			{
+				remark = remark.Trim();
+			}
+			else
+			{
+				remark = "";
+			}
+			if (tags != null)
+			{
+				tags = tags.Trim();
+			}
+			else
+			{
+				tags = "";
+			}
+			Exception exception = null;
+			List<ProStoredProcedure> proSPs = new List<ProStoredProcedure>();
+			using (SQLPro db = new SQLPro())
+			{
+				db.Database.Log = (SqlLOG) =>
+				{
+					System.Diagnostics.Debug.WriteLine(SqlLOG);
+				};
+
+				try
+				{
+					proSPs = (from proSP in db.ProStoredProcedure
+							  where proSP.Name.Contains(Name) && proSP.Execute.Contains(EXECUTE)
+							  && proSP.Content.Contains(content) && proSP.Remark.Contains(remark)
+							  && proSP.Tags.Contains(tags)
+							  select proSP).OrderByDescending(r=>r.CreatedTime).ToList();
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			}
+
+			return proSPs;
+		}
+
+
+		// GET api/values/5
+		public object Get(int id)
+		{
+			Exception exception = null;
+			ProStoredProcedure proSP = null;
+			using (SQLPro db = new SQLPro())
+			{
+				try
+				{
+					proSP = db.ProStoredProcedure.Find(id);
+				}
+				catch (Exception ex)
+				{
+					exception = ex;
+				}
+			}
+
+			if (exception == null && proSP != null)
+			{
+				return proSP;
+			}
+			else
+			{
+				return exception;
+			}
+		}
+
+		// POST api/values
+		public object Post([FromBody]ProStoredProcedure proSP)
         {
             if (proSP == null)
             {
@@ -141,7 +393,11 @@ namespace SQLProgrammability.Controllers
                         {
                             proSP.Remark = proSPNew.Remark;
                         }
-                        db.SaveChanges();
+						if (!string.IsNullOrEmpty(proSPNew.Tags))
+						{
+							proSP.Tags = proSPNew.Tags;
+						}
+						db.SaveChanges();
                     }
                 }
                 catch (Exception ex)

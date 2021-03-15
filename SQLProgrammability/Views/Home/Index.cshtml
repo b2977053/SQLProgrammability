@@ -3,16 +3,16 @@
         Home > index
     </div>
     <div class="col-md-12 search-header">
-        @using (Html.BeginForm("index", "Home"))
+        @using (Html.BeginForm("index", "Home", FormMethod.Post, new { @Id = "formList", @Autocomplete= "off" }))
         {
             @Html.Hidden("testHidden", "testHiddentestHidden")
-
             <div class="form-group">
-                Name: @Html.TextBox("Name", "NameName")
-                EXECUTE: @Html.TextBox("EXECUTE", "EXECUTEEXECUTE")
-                <br>content: @Html.TextBox("content", "contentcontent")
-                remark: @Html.TextBox("remark", "remarkremark")
-                <br>tags: @Html.TextBox("tags", "tagstags")
+                Name: @Html.TextBox("Name", (string)ViewBag.Name)
+                EXECUTE: @Html.TextBox("EXECUTE", (string)ViewBag.EXECUTE)
+                content: @Html.TextBox("content", (string)ViewBag.content)
+                remark: @Html.TextBox("remark", (string)ViewBag.remark)
+                <br>tags: @Html.TextBox("tags", (string)ViewBag.tags)
+				<button>查詢</button>
             </div>
         }
         <button type="button" id="btnADD" class="btn btn-default btn-sm" data-toggle="modal" data-target="#ModalADD">
@@ -278,9 +278,9 @@
 
         });
         return dataTable;
-    }
+	}
     $(document).ready(function () {
-        table_example = SetDataTable_ajax($('#example'), 'http://localhost:58077/api/SQLProCRUD');
+		table_example = SetDataTable_ajax($('#example'), 'http://localhost:58077/api/SQLProCRUD' + '@Html.Raw(ViewBag.AJAXparams)');
     });
 
     /*
